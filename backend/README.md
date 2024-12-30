@@ -80,8 +80,18 @@ If the login is successful, the response will be a JSON object containing:
 ##### Failure
 If the login fails, the response will be a JSON object containing an error message.
 
+###### Example
+```json
+{
+  "errors": [
+    {
+      "msg": "Invalid Email or Password"
+    }
+  ]
+}
 ```
 
+---
 
 ### 3. `/users/profile`
 
@@ -125,6 +135,15 @@ If the request is successful, the response will be a JSON object containing the 
 ##### Failure
 If the request fails, the response will be a JSON object containing an error message.
 
+###### Example
+```json
+{
+  "errors": [
+    {
+      "msg": "Authentication required"
+    }
+  ]
+}
 ```
 
 ---
@@ -164,8 +183,20 @@ If the logout is successful, the response will be a JSON object confirming the a
 ##### Failure
 If the logout fails, the response will be a JSON object containing an error message.
 
+###### Example
+```json
+{
+  "errors": [
+    {
+      "msg": "Invalid Token"
+    }
+  ]
+}
 ```
-### 4. `/captains/register`
+
+---
+
+### 5. `/captains/register`
 
 #### Description
 This endpoint is used to register a new captain. It validates the input data, creates a new captain in the database, and returns the created captain data.
