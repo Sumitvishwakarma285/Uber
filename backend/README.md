@@ -80,15 +80,6 @@ If the login is successful, the response will be a JSON object containing:
 ##### Failure
 If the login fails, the response will be a JSON object containing an error message.
 
-###### Example
-```json
-{
-  "errors": [
-    {
-      "msg": "Invalid Email or Password"
-    }
-  ]
-}
 ```
 
 
@@ -134,15 +125,6 @@ If the request is successful, the response will be a JSON object containing the 
 ##### Failure
 If the request fails, the response will be a JSON object containing an error message.
 
-###### Example
-```json
-{
-  "errors": [
-    {
-      "msg": "Authentication required"
-    }
-  ]
-}
 ```
 
 ---
@@ -182,15 +164,83 @@ If the logout is successful, the response will be a JSON object confirming the a
 ##### Failure
 If the logout fails, the response will be a JSON object containing an error message.
 
-###### Example
+```
+### 4. `/captains/register`
+
+#### Description
+This endpoint is used to register a new captain. It validates the input data, creates a new captain in the database, and returns the created captain data.
+
+#### Method
+`POST`
+
+#### Request Body
+The request body should be a JSON object with the following fields:
+
+- **`fullname`**: An object containing:
+  - **`firstname`**: A string with a minimum length of 3 characters (required).
+  - **`lastname`**: A string (optional).
+- **`email`**: A string representing a valid email address (required).
+- **`password`**: A string with a minimum length of 6 characters (required).
+- **`vehicle`**: An object containing:
+  - **`color`**: A string with a minimum length of 3 characters (required).
+  - **`plate`**: A string with a minimum length of 3 characters (required).
+  - **`capacity`**: An integer greater than or equal to 1 (required).
+  - **`vehicleType`**: A string, one of `car`, `bike`, or `auto` (required).
+
+##### Example
 ```json
 {
-  "errors": [
-    {
-      "msg": "Invalid Token"
+    "fullname": {
+        "firstname": "John",
+        "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "password": "securePassword123",
+    "vehicle": {
+        "color": "Blue",
+        "plate": "XYZ1234",
+        "capacity": 4,
+        "vehicleType": "car"
     }
-  ]
 }
 ```
 
+---
 
+#### Response
+
+##### Success (201 Created)
+If the registration is successful, the response will be a JSON object containing the registered captain's details.
+
+###### Example
+```json
+{
+    "message": "Captain registered successfully",
+    "captain": {
+        "fullname": {
+            "firstname": "John",
+            "lastname": "Doe"
+        },
+        "email": "john.doe@example.com",
+        "vehicle": {
+            "color": "Blue",
+            "plate": "XYZ1234",
+            "capacity": 4,
+            "vehicleType": "car"
+        }
+    }
+}
+```
+
+##### Failure (400 Bad Request)
+If the validation fails, the response will be a JSON object containing an array of error messages.
+
+###### Example
+```json
+{
+    "errors": [
+        "Email is required",
+        "Password must be at least 6 characters"
+    ]
+}
+```
