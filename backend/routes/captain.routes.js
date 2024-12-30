@@ -14,5 +14,10 @@ body('vehicle.vehicleType').isIn(['car','bike','auto']).withMessage('vehicleType
 
 ],captainController.registerCaptain);
 
+router.post('/login',[
+body('email').isEmail().withMessage('Please enter a valid email'),
+body('password').isLength({min:6}).withMessage('password must be of 6 characters long')
+],captainController.loginCaptain);
+
 module.exports=router;
 
