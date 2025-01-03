@@ -275,3 +275,176 @@ If the validation fails, the response will be a JSON object containing an array 
     ]
 }
 ```
+### 6. `/captains/login`
+
+#### Description
+This endpoint is used to log in an existing captain. It validates the input data, checks the captain's credentials, and returns a JWT token along with the captain data if the credentials are valid.
+
+#### Method
+`POST`
+
+#### Request Body
+The request body should be a JSON object with the following fields:
+- **`email`**: A string representing a valid email address (required).
+- **`password`**: A string with a minimum length of 6 characters (required).
+
+##### Example
+```json
+{
+  "email": "john.doe@example.com",
+  "password": "securePassword123"
+}
+```
+
+---
+
+#### Response
+
+##### Success
+If the login is successful, the response will be a JSON object containing:
+- **`token`**: A JWT token.
+- **`captain`**: The captain data.
+
+###### Example
+```json
+{
+  "token": "your_jwt_token",
+  "captain": {
+    "_id": "captain_id",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "vehicle": {
+      "color": "Blue",
+      "plate": "XYZ1234",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+  }
+}
+```
+
+##### Failure
+If the login fails, the response will be a JSON object containing an error message.
+
+###### Example
+```json
+{
+  "errors": [
+    {
+      "msg": "Invalid Email or Password"
+    }
+  ]
+}
+```
+
+---
+
+### 7. `/captains/profile`
+
+#### Description
+This endpoint fetches the profile of the currently authenticated captain.
+
+#### Method
+`GET`
+
+#### Headers
+The request must include the following header:
+- **`Authorization`**: A string containing the Bearer token (required).
+
+##### Example
+```http
+GET /captains/profile HTTP/1.1
+Authorization: Bearer <token>
+```
+
+---
+
+#### Response
+
+##### Success
+If the request is successful, the response will be a JSON object containing the captain's profile.
+
+###### Example
+```json
+{
+  "captain": {
+    "_id": "captain_id",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "vehicle": {
+      "color": "Blue",
+      "plate": "XYZ1234",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+  }
+}
+```
+
+##### Failure
+If the request fails, the response will be a JSON object containing an error message.
+
+###### Example
+```json
+{
+  "errors": [
+    {
+      "msg": "Authentication required"
+    }
+  ]
+}
+```
+
+---
+
+### 8. `/captains/logout`
+
+#### Description
+This endpoint logs out the currently authenticated captain by clearing the authentication token and blacklisting it.
+
+#### Method
+`GET`
+
+#### Headers
+The request must include the following header:
+- **`Authorization`**: A string containing the Bearer token (required).
+
+##### Example
+```http
+GET /captains/logout HTTP/1.1
+Authorization: Bearer <token>
+```
+
+---
+
+#### Response
+
+##### Success
+If the logout is successful, the response will be a JSON object confirming the action.
+
+###### Example
+```json
+{
+  "message": "Logged Out Successfully"
+}
+```
+
+##### Failure
+If the logout fails, the response will be a JSON object containing an error message.
+
+###### Example
+```json
+{
+  "errors": [
+    {
+      "msg": "Invalid Token"
+    }
+  ]
+}
+```
